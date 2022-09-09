@@ -1,5 +1,6 @@
 import { showMenu, clearMenu } from './modules/menu.js';
 let isMouseMove = false;
+let modifierKey = 'shift';
 
 function onMouseDown(e) {
   isMouseMove = false;
@@ -12,6 +13,22 @@ function onMouseMove() {
   isMouseMove = true;
 }
 
+function isRightModifierKey(event) {
+  if (!modifierKey) {
+    return true;
+  }
+  switch (modifierKey) {
+    case 'shift':
+      return event.shiftKey;
+    case 'alt':
+      return event.altKey;
+    case 'ctrl':
+      return event.ctrlKey;
+    default:
+      return true;
+  }
+}
+
 function onMouseUp(e) {
   if (isMouseMove) {
     const selectionObj = window.getSelection();
@@ -19,7 +36,7 @@ function onMouseUp(e) {
     const clientRect =
       selectionObj.anchorNode.parentElement.getBoundingClientRect();
 
-    if (copyText) {
+    if (isRightModifierKey(e) && copyText) {
       const x = clientRect.left + 10;
       const y = clientRect.bottom + 10;
       showMenu(x, y, copyText);
