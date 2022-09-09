@@ -1,0 +1,19 @@
+.bk-menu-item {
+  position: fixed;
+  background: #a084ca;
+  color: white;
+  border: 5px solid #645caa;
+  z-index: 999999;
+}
+
+.bk-menu-item ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0px;
+}
+
+.bk-menu-item ul li {
+  padding: 10px;
+  margin: 10px 0px;
+  border: 1px solid #ecc5fb;
+}
