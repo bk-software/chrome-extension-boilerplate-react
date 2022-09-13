@@ -1,13 +1,19 @@
-import { searchSites } from './search-sites.js';
+import defaultSites from './defaultSites';
+
+let sites;
+chrome.storage.sync.get({ sites: defaultSites }, function (items) {
+  sites = items.sites;
+  console.log('sites', sites);
+});
 
 let currentMenu, copyText;
 
 function getMenuElement() {
   const ul = document.createElement('ul');
-  for (let site in searchSites) {
+  for (let index in sites) {
     const li = document.createElement('li');
-    li.innerText = searchSites[site].name;
-    li.setAttribute('data-site', site);
+    li.innerText = sites[index].name;
+    li.setAttribute('data-site', index);
     ul.appendChild(li);
   }
 
@@ -15,10 +21,12 @@ function getMenuElement() {
 }
 
 function onMenuClick(event) {
-  const siteName = event.target.dataset.site;
-  console.log(siteName);
-  if (siteName) {
-    const url = searchSites[siteName].url(copyText);
+  const siteIndex = event.target.dataset.site;
+  const site = sites[siteIndex];
+  console.log('aaa', site);
+  if (site.searchString) {
+    const url = site.searchString.replace('@@@', encodeURIComponent(copyText));
+    //const url = searchSites[siteName].url(copyText);
     window.open(url, 'blank');
   }
 }
