@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { ReactChildren, ReactEventHandler } from 'react';
 import './SearchEnginesList.css';
 import defaultSites from '../../Content/modules/defaultSites';
+import {
+  FontAwesomeIcon,
+  FontAwesomeIconProps,
+} from '@fortawesome/react-fontawesome';
+import {
+  faTrashCan,
+  faFloppyDisk,
+  faPlus,
+  faRotateRight,
+  IconDefinition,
+} from '@fortawesome/free-solid-svg-icons';
 
 interface Message {
   text: string;
@@ -11,6 +22,25 @@ interface InputProps {
   initValue: string;
   onChange: Function;
 }
+
+interface ButtonProps {
+  icon: IconDefinition;
+  onClick: ReactEventHandler;
+  children?: React.ReactNode;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  icon,
+  onClick,
+  children,
+}: ButtonProps) => {
+  return (
+    <button onClick={onClick}>
+      <FontAwesomeIcon icon={icon} size="lg" />
+      <>{children}</>
+    </button>
+  );
+};
 
 const Input: React.FC<InputProps> = ({ initValue, onChange }: InputProps) => {
   const [value, setValue] = React.useState(initValue);
@@ -98,13 +128,24 @@ const SearchEnginsList: React.FC = () => {
               initValue={site.searchString}
               onChange={(value: string) => (site.searchString = value)}
             />
-            <button onClick={() => deleteSite(index)}>delete</button>
+            <Button
+              onClick={() => deleteSite(index)}
+              icon={faTrashCan}
+            ></Button>
           </li>
         ))}
         <li>
-          <button onClick={addOne}>Add One</button>
-          <button onClick={save}>Save</button>
-          <button onClick={restoreDefault}>Restore Default</button>
+          <div>
+            <Button onClick={addOne} icon={faPlus}>
+              Add
+            </Button>
+            <Button onClick={save} icon={faFloppyDisk}>
+              Save
+            </Button>
+            <Button onClick={restoreDefault} icon={faRotateRight}>
+              Restore Default
+            </Button>
+          </div>
         </li>
       </ul>
       <div className={message.type}>
