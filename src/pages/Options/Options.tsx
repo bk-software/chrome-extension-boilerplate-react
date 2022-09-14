@@ -1,6 +1,7 @@
 import React from 'react';
 import './Options.css';
 import defaultSites from '../Content/modules/defaultSites';
+import ChooseModifier from './ChooseModifier';
 
 interface Props {
   props: string;
@@ -31,18 +32,21 @@ const Input: React.FC<InputProps> = ({ initValue, onChange }: InputProps) => {
   );
 };
 
+const defaultOptions = {
+  sites: defaultSites,
+};
+
 const Options: React.FC = () => {
   const [sites, setSites] = React.useState(defaultSites);
   const [message, setMessage] = React.useState({ text: '', type: '' });
 
   React.useEffect(() => {
-    chrome.storage.sync.get({ sites: defaultSites }, function (items) {
+    chrome.storage.sync.get(defaultOptions, function (items) {
       setSites(items.sites);
     });
   }, []);
 
   function deleteSite(index: number) {
-    console.log({ index });
     const temp = [...sites];
     temp.splice(index, 1);
     setSites(temp);
@@ -111,6 +115,7 @@ const Options: React.FC = () => {
       <div className={message.type}>
         {message.text && <div>{message.text}</div>}
       </div>
+      <ChooseModifier />
     </div>
   );
 };

@@ -1,6 +1,13 @@
 import { showMenu, clearMenu } from './modules/menu.js';
+import { Modifiers } from './modules/modifier';
+import { defaultModifier } from './modules/modifier';
+
+let modifierKey = defaultModifier;
+chrome.storage.sync.get({ modifier: defaultModifier }, function (items) {
+  modifierKey = items.modifier;
+});
+
 let isMouseMove = false;
-let modifierKey = 'shift';
 
 function onMouseDown(e) {
   isMouseMove = false;
@@ -14,15 +21,12 @@ function onMouseMove() {
 }
 
 function isRightModifierKey(event) {
-  if (!modifierKey) {
-    return true;
-  }
   switch (modifierKey) {
-    case 'shift':
+    case Modifiers.Shift:
       return event.shiftKey;
-    case 'alt':
+    case Modifiers.Alt:
       return event.altKey;
-    case 'ctrl':
+    case Modifiers.Ctrl:
       return event.ctrlKey;
     default:
       return true;

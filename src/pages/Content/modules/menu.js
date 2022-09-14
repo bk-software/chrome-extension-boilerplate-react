@@ -3,7 +3,6 @@ import defaultSites from './defaultSites';
 let sites;
 chrome.storage.sync.get({ sites: defaultSites }, function (items) {
   sites = items.sites;
-  console.log('sites', sites);
 });
 
 let currentMenu, copyText;
@@ -23,7 +22,6 @@ function getMenuElement() {
 function onMenuClick(event) {
   const siteIndex = event.target.dataset.site;
   const site = sites[siteIndex];
-  console.log('aaa', site);
   if (site.searchString) {
     const url = site.searchString.replace('@@@', encodeURIComponent(copyText));
     //const url = searchSites[siteName].url(copyText);
