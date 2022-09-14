@@ -1,0 +1,17 @@
+#sites-options ul {
+  list-style-type: none;
+}
+
+#sites-options input {
+  min-width: 500px;
+}
+
+.error {
+  font-size: 1rem;
+  color: red;
+}
+
+.success {
+  font-size: 1rem;
+  color: green;
+}

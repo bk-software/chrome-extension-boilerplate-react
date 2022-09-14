@@ -1,5 +1,5 @@
 import React from 'react';
-import { Modifiers } from '../Content/modules/modifier';
+import { Modifiers } from '../../Content/modules/modifier';
 
 export default function ChooseModifier() {
   const [currentModifier, setCurrentModifier] = React.useState(Modifiers.None);
